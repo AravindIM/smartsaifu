@@ -27,6 +27,10 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {},
+      ),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
