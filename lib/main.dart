@@ -33,8 +33,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        onPressed: openDialog,
         child: const Icon(Icons.add),
-        onPressed: () {},
       ),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
@@ -82,4 +82,23 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
+  Future openDialog() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Add Expense"),
+          content: const TextField(
+            autofocus: true,
+            decoration: InputDecoration(hintText: "Enter the amount"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("ADD"),
+            ),
+          ],
+        ),
+      );
 }
