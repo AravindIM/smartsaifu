@@ -15,15 +15,20 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'SmartSaifu'),
+      home: const MainPage(title: 'SmartSaifu'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key, required this.title});
   final String title;
 
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +49,7 @@ class MyHomePage extends StatelessWidget {
             title: Expanded(
               child: Center(
                 child: Text(
-                  title,
+                  widget.title,
                   style: const TextStyle(fontFamily: "Roboto", fontSize: 30.0),
                 ),
               ),
