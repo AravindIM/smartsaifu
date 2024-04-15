@@ -43,6 +43,8 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          textInputController.clear();
+
           final expense = await openDialog() ?? 0;
           if (expense == 0) return;
 
