@@ -70,11 +70,11 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ),
-            flexibleSpace: const FlexibleSpaceBar(
+            flexibleSpace: FlexibleSpaceBar(
               background: Center(
                 child: Text(
-                  "2100",
-                  textScaler: TextScaler.linear(5.0),
+                  "${expenses.fold(0, (previousValue, element) => previousValue + element)}",
+                  textScaler: const TextScaler.linear(5.0),
                 ),
               ),
             ),
