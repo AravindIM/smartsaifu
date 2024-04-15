@@ -29,11 +29,27 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final textInputController = TextEditingController();
+  List<int> expenses = [];
+
+  @override
+  void dispose() {
+    textInputController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: openDialog,
+        onPressed: () async {
+          final expense = await openDialog() ?? 0;
+          if (expense == 0) return;
+
+          setState(() {
+            expenses.add(expense);
+          });
+        },
         child: const Icon(Icons.add),
       ),
       body: CustomScrollView(
@@ -63,38 +79,38 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return ListTile(
-                  title: Center(
-                    child: Text(
-                      "${index * 10 + 10}",
-                      textScaler: const TextScaler.linear(3.0),
-                    ),
+          SliverList.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Center(
+                  child: Text(
+                    "${expenses[index]}",
+                    textScaler: const TextScaler.linear(3.0),
                   ),
-                );
-              },
-              childCount: 20,
-            ),
+                ),
+              );
+            },
+            itemCount: expenses.length,
           ),
         ],
       ),
     );
   }
 
-  Future openDialog() => showDialog(
+  Future<int?> openDialog() => showDialog<int>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text("Add Expense"),
-          content: const TextField(
+          content: TextField(
             autofocus: true,
-            decoration: InputDecoration(hintText: "Enter the amount"),
+            decoration: const InputDecoration(hintText: "Enter the amount"),
+            controller: textInputController,
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                final value = int.tryParse(textInputController.text) ?? 0;
+                Navigator.of(context).pop(value);
               },
               child: const Text("ADD"),
             ),
