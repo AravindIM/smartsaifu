@@ -74,29 +74,52 @@ class _MainPageState extends State<MainPage> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Center(
-                child: Text(
-                  "${expenses.fold(0, (previousValue, element) => previousValue + element)}",
-                  textScaler: const TextScaler.linear(5.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "${expenses.fold(0, (previousValue, element) => previousValue + element)}",
+                      textScaler: const TextScaler.linear(5.0),
+                      softWrap: false,
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
           SliverList.builder(
             itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Center(
-                  child: Text(
-                    "${expenses[index]}",
-                    textScaler: const TextScaler.linear(3.0),
+              return Card(
+                surfaceTintColor: Theme.of(context).colorScheme.background,
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.paid,
+                    size: 50.0,
                   ),
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    setState(() {
-                      expenses.removeAt(index);
-                    });
-                  },
+                  title: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "${expenses[index]}",
+                          textScaler: const TextScaler.linear(2.5),
+                        ),
+                      ),
+                    ),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      size: 30.0,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        expenses.removeAt(index);
+                      });
+                    },
+                  ),
                 ),
               );
             },
