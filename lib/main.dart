@@ -90,6 +90,14 @@ class _MainPageState extends State<MainPage> {
                     textScaler: const TextScaler.linear(3.0),
                   ),
                 ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    setState(() {
+                      expenses.removeAt(index);
+                    });
+                  },
+                ),
               );
             },
             itemCount: expenses.length,
