@@ -4,6 +4,18 @@ void main() {
   runApp(const MyApp());
 }
 
+class Expense {
+  final String title;
+  final String category;
+  final double amount;
+
+  const Expense({
+    required this.title,
+    required this.category,
+    required this.amount,
+  });
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -29,12 +41,16 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final textInputController = TextEditingController();
-  List<double> expenses = [];
+  final titleInputController = TextEditingController();
+  final amountInputController = TextEditingController();
+  final categoryInputController = TextEditingController();
+  List<Expense> expenses = [];
 
   @override
   void dispose() {
-    textInputController.dispose();
+    titleInputController.dispose();
+    amountInputController.dispose();
+    categoryInputController.dispose();
     super.dispose();
   }
 
@@ -43,10 +59,13 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          textInputController.clear();
+          titleInputController.clear();
+          amountInputController.clear();
+          categoryInputController.clear();
 
-          final expense = await openDialog() ?? 0.0;
-          if (expense == 0) return;
+          final expense = await openDialog();
+
+          if (expense == null) return;
 
           setState(() {
             expenses.add(expense);
@@ -79,7 +98,7 @@ class _MainPageState extends State<MainPage> {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      "${expenses.fold(0.0, (previousValue, element) => previousValue + element)}",
+                      "${expenses.fold(0.0, (previousValue, element) => previousValue + element.amount)}",
                       textScaler: const TextScaler.linear(5.0),
                       softWrap: false,
                     ),
@@ -97,16 +116,16 @@ class _MainPageState extends State<MainPage> {
                     Icons.paid,
                     size: 50.0,
                   ),
-                  title: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          "${expenses[index]}",
-                          textScaler: const TextScaler.linear(2.5),
-                        ),
-                      ),
+                  title: Text(
+                    overflow: TextOverflow.ellipsis,
+                    expenses[index].title,
+                  ),
+                  subtitle: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "${expenses[index].amount}",
+                      textScaler: const TextScaler.linear(2.5),
                     ),
                   ),
                   trailing: IconButton(
@@ -130,20 +149,49 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Future<double?> openDialog() => showDialog<double>(
+  Future<Expense?> openDialog() => showDialog<Expense>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text("Add Expense"),
-          content: TextField(
-            autofocus: true,
-            decoration: const InputDecoration(hintText: "Enter the amount"),
-            controller: textInputController,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                autofocus: true,
+                decoration: const InputDecoration(hintText: "Title"),
+                controller: titleInputController,
+              ),
+              TextField(
+                autofocus: true,
+                decoration: const InputDecoration(hintText: "Amount"),
+                controller: amountInputController,
+              ),
+              TextField(
+                autofocus: true,
+                decoration: const InputDecoration(hintText: "Category"),
+                controller: categoryInputController,
+              ),
+            ],
           ),
           actions: [
             TextButton(
               onPressed: () {
-                final value = double.tryParse(textInputController.text) ?? 0.0;
-                Navigator.of(context).pop(value);
+                final amount =
+                    double.tryParse(amountInputController.text) ?? 0.0;
+
+                if (amount == 0) {
+                  Navigator.of(context).pop();
+                }
+
+                final title = titleInputController.text;
+                final category = categoryInputController.text;
+                final expense = Expense(
+                  title: title,
+                  category: category,
+                  amount: amount,
+                );
+
+                Navigator.of(context).pop(expense);
               },
               child: const Text("ADD"),
             ),
