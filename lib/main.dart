@@ -114,9 +114,21 @@ class _MainPageState extends State<MainPage> {
               return Card(
                 //surfaceTintColor: Theme.of(context).colorScheme.background,
                 child: ListTile(
-                  leading: Icon(
-                    icon,
-                    size: 50.0,
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.inversePrimary,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Icon(
+                          icon,
+                          color: Theme.of(context).colorScheme.onInverseSurface,
+                          size: 50.0,
+                        ),
+                      ),
+                    ),
                   ),
                   title: Text(
                     overflow: TextOverflow.ellipsis,
