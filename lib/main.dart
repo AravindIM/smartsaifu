@@ -224,6 +224,7 @@ class _MainPageState extends State<MainPage> {
                 autofocus: true,
                 decoration: const InputDecoration(hintText: "Amount"),
                 controller: amountInputController,
+                keyboardType: TextInputType.number,
               ),
               TextField(
                 autofocus: true,
