@@ -237,13 +237,12 @@ class _MainPageState extends State<MainPage> {
               onPressed: () {
                 final amount =
                     double.tryParse(amountInputController.text) ?? 0.0;
-
-                if (amount == 0) {
-                  return;
-                }
-
                 final title = titleInputController.text;
                 final category = categoryInputController.text.toLowerCase();
+
+                if (amount == 0 || title.isEmpty || category.isEmpty) {
+                  return;
+                }
                 final expense = Expense(
                   title: title,
                   category: category,
