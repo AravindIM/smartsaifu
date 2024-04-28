@@ -109,11 +109,13 @@ class _MainPageState extends State<MainPage> {
           ),
           SliverList.builder(
             itemBuilder: (BuildContext context, int index) {
+              final icon = getCategoryIcon(expenses[index].category);
+
               return Card(
                 //surfaceTintColor: Theme.of(context).colorScheme.background,
                 child: ListTile(
-                  leading: const Icon(
-                    Icons.paid,
+                  leading: Icon(
+                    icon,
                     size: 50.0,
                   ),
                   title: Text(
@@ -147,6 +149,63 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
     );
+  }
+
+  IconData getCategoryIcon(String category) {
+    switch (category) {
+      case "food":
+        return Icons.restaurant;
+      case "travel":
+        return Icons.flight;
+      case "movie":
+        return Icons.theaters;
+      case "shopping":
+        return Icons.shopping_cart;
+      case "taxi":
+        return Icons.local_taxi;
+      case "sports":
+        return Icons.sports_soccer;
+      case "game":
+        return Icons.sports_esports;
+      case "plane":
+        return Icons.flight;
+      case "bus":
+      case "train":
+        return Icons.train;
+      case "electricity":
+        return Icons.bolt;
+      case "fuel":
+        return Icons.local_gas_station;
+      case "rent":
+        return Icons.home;
+      case "tv":
+      case "cable":
+        return Icons.tv;
+      case "intenet":
+        return Icons.wifi;
+      case "water":
+        return Icons.water_drop;
+      case "mobile":
+        return Icons.smartphone;
+      case "medical":
+      case "health":
+      case "hospital":
+      case "doctor":
+        return Icons.local_hospital;
+      case "gift":
+        return Icons.redeem;
+      case "liquor":
+      case "drinks":
+        return Icons.liquor;
+      case "smoking":
+      case "cigarette":
+      case "smoke":
+        return Icons.smoking_rooms;
+      case "gas":
+        return Icons.local_fire_department;
+      default:
+        return Icons.receipt;
+    }
   }
 
   Future<Expense?> openDialog() => showDialog<Expense>(
