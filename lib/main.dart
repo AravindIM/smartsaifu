@@ -65,11 +65,11 @@ class _MainPageState extends State<MainPage> {
 
           final expense = await openDialog();
 
-          if (expense == null) return;
-
-          setState(() {
-            expenses.add(expense);
-          });
+          if (expense != null) {
+            setState(() {
+              expenses.add(expense);
+            });
+          }
         },
         child: const Icon(Icons.add),
       ),
@@ -208,7 +208,7 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  Future<Expense?> openDialog() => showDialog<Expense>(
+  Future<Expense?> openDialog() => showDialog<Expense?>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text("Add Expense"),
@@ -239,7 +239,7 @@ class _MainPageState extends State<MainPage> {
                     double.tryParse(amountInputController.text) ?? 0.0;
 
                 if (amount == 0) {
-                  Navigator.of(context).pop();
+                  return;
                 }
 
                 final title = titleInputController.text;
@@ -253,6 +253,12 @@ class _MainPageState extends State<MainPage> {
                 Navigator.of(context).pop(expense);
               },
               child: const Text("ADD"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("CANCEL"),
             ),
           ],
         ),
