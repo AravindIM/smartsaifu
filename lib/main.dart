@@ -30,7 +30,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final textInputController = TextEditingController();
-  List<int> expenses = [];
+  List<double> expenses = [];
 
   @override
   void dispose() {
@@ -45,7 +45,7 @@ class _MainPageState extends State<MainPage> {
         onPressed: () async {
           textInputController.clear();
 
-          final expense = await openDialog() ?? 0;
+          final expense = await openDialog() ?? 0.0;
           if (expense == 0) return;
 
           setState(() {
@@ -79,7 +79,7 @@ class _MainPageState extends State<MainPage> {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      "${expenses.fold(0, (previousValue, element) => previousValue + element)}",
+                      "${expenses.fold(0.0, (previousValue, element) => previousValue + element)}",
                       textScaler: const TextScaler.linear(5.0),
                       softWrap: false,
                     ),
@@ -130,7 +130,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Future<int?> openDialog() => showDialog<int>(
+  Future<double?> openDialog() => showDialog<double>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text("Add Expense"),
@@ -142,7 +142,7 @@ class _MainPageState extends State<MainPage> {
           actions: [
             TextButton(
               onPressed: () {
-                final value = int.tryParse(textInputController.text) ?? 0;
+                final value = double.tryParse(textInputController.text) ?? 0.0;
                 Navigator.of(context).pop(value);
               },
               child: const Text("ADD"),
