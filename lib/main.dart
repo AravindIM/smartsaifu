@@ -248,6 +248,12 @@ class _MainPageState extends State<MainPage> {
           actions: [
             TextButton(
               onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("CANCEL"),
+            ),
+            TextButton(
+              onPressed: () {
                 final amount =
                     double.tryParse(amountInputController.text) ?? 0.0;
                 final title = titleInputController.text;
@@ -266,12 +272,6 @@ class _MainPageState extends State<MainPage> {
                 Navigator.of(context).pop(expense);
               },
               child: const Text("ADD"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("CANCEL"),
             ),
           ],
         ),
