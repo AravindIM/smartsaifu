@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SmartSaifu',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const MainPage(title: 'SmartSaifu'),
@@ -91,7 +91,7 @@ class _MainPageState extends State<MainPage> {
           SliverList.builder(
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                surfaceTintColor: Theme.of(context).colorScheme.background,
+                //surfaceTintColor: Theme.of(context).colorScheme.background,
                 child: ListTile(
                   leading: const Icon(
                     Icons.paid,
