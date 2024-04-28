@@ -243,7 +243,7 @@ class _MainPageState extends State<MainPage> {
                 }
 
                 final title = titleInputController.text;
-                final category = categoryInputController.text;
+                final category = categoryInputController.text.toLowerCase();
                 final expense = Expense(
                   title: title,
                   category: category,
