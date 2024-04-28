@@ -251,7 +251,8 @@ class _MainPageState extends State<MainPage> {
                 final amount =
                     double.tryParse(amountInputController.text) ?? 0.0;
                 final title = titleInputController.text;
-                final category = categoryInputController.text.toLowerCase();
+                final category =
+                    categoryInputController.text.trim().toLowerCase();
 
                 if (amount == 0 || title.isEmpty || category.isEmpty) {
                   return;
